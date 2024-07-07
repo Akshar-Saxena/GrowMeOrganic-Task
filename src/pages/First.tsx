@@ -1,10 +1,20 @@
-import { TextField } from "@mui/material"
-import { useState } from "react"
+import { Alert, TextField } from "@mui/material"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function First() {
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const msg = localStorage.getItem("toast") || undefined
+        console.log(msg)
+        setAlertMsg(msg != undefined ? msg : "No message")
+        setTimeout(() => {
+            setAlertMsg("No message")
+            localStorage.removeItem("toast")
+        }, 3000);
+    }, [])
 
     interface inputData {
         name: String,
@@ -18,6 +28,8 @@ function First() {
         email: ""
     })
 
+    const [alertMsg, setAlertMsg] = useState<String>("No message")
+
     const handleSubmit = () => {
         setData({ name: data.name.trim(), email: data.email.trim(), phno: data.phno.trim() })
         localStorage.setItem("data", JSON.stringify(data))
@@ -26,6 +38,7 @@ function First() {
 
     return (
         <div className="flex flex-col justify-center items-center">
+            {alertMsg != "No message" && <Alert className="absolute top-5 left-5" severity="error">{alertMsg}</Alert>}
             <h1 className="text-white font-bold text-4xl text-center pb-6">User Details</h1>
             <div className="flex bg-[#ffffff29] backdrop-blur-xl flex-col p-12 rounded-md drop-shadow-[4px_4px_4px_black] w-[400px] m-auto justify-between h-[40vh]">
                 <TextField className="bg-[rgba(255, 255, 255, 0.224)] text-white" id="filled-basic" label="Name" variant="filled" value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} />
