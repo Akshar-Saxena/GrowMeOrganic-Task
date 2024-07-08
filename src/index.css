@@ -7,14 +7,10 @@
     padding: 0;
 }
 
-body {
-    background: url("https://i.pinimg.com/originals/3f/64/58/3f6458487cacd6d4120ea06f02856a47.jpg");
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: beige;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
